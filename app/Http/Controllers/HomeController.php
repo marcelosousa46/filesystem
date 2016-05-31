@@ -124,11 +124,23 @@ class HomeController extends Controller
     public function desbloqueio($id){
         $usuario = User::find($id);
         $lista   = $this->lista($usuario->id);
-        $user = User::find($id)->update(['status' => 'L']);
+        $user    = User::find($id)->update(['status' => 'L']);
         if ($user){
            return view('home',compact('lista', 'sucesso','usuario'));
         } else {
             $erro = 'Problema no desbloqueio do usuário!';
+            return view('home',compact('lista', 'erro','usuario'));
+        }
+    }
+
+    public function bloqueio($id){
+        $usuario = User::find($id);
+        $lista   = $this->lista($usuario->id);
+        $user    = User::find($id)->update(['status' => 'B']);
+        if ($user){
+           return view('home',compact('lista', 'sucesso','usuario'));
+        } else {
+            $erro = 'Problema no bloqueio do usuário!';
             return view('home',compact('lista', 'erro','usuario'));
         }
     }
