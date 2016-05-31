@@ -12,8 +12,9 @@ class HomeController extends Controller
 {
     private function lista($id)
     {
+        $lista = array();
         $usuario = User::find($id)->name;
-        $pasta = public_path().'\\'.studly_case($usuario);
+        $pasta = public_path().'/'.studly_case($usuario);
         if (!file_exists($pasta)){
             mkdir($pasta);
         } else {
@@ -42,7 +43,7 @@ class HomeController extends Controller
             $lista   = $this->lista(auth()->user()->id);
             return view('home',compact('lista','usuario'));
         } else {
-            $erro = 'Sistema de arquivos bloqueado, favor solicitar desbloqueio!';
+            $erro  = 'Sistema de arquivos bloqueado, favor solicitar desbloqueio!';
             return view('home',compact('lista','erro','usuario'));
         }    
     }
@@ -76,7 +77,7 @@ class HomeController extends Controller
             return view('upload',compact('erro'));
         }    
         $usuario = auth()->user()->name;
-        $destino = public_path().'\\'.studly_case($usuario).'\\';
+        $destino = public_path().'/'.studly_case($usuario).'/';
         $nome    = $request->file('arquivo')->getClientOriginalName();
         $sucesso = $request->file('arquivo')->move($destino, $nome);
         return view('upload',compact('sucesso'));
@@ -84,7 +85,7 @@ class HomeController extends Controller
 
     public function download($id,$arquivo){
         $usuario = User::find($id);
-        $file    = public_path().'\\'.studly_case($usuario->name).'\\'.$arquivo;
+        $file    = public_path().'/'.studly_case($usuario->name).'/'.$arquivo;
         $headers = array('Content-Type: application/pdf',);
         $lista   = $this->lista($usuario->id);
         $sucesso = Response::download($file, $arquivo, $headers);
@@ -99,7 +100,7 @@ class HomeController extends Controller
     public function delete($id,$arquivo){
         $usuario = User::find($id);
         $lista   = $this->lista($usuario->id);
-        $file    = public_path().'\\'.studly_case($usuario->name).'\\'.$arquivo;
+        $file    = public_path().'/'.studly_case($usuario->name).'/'.$arquivo;
         if (file_exists($file)){
             $sucesso = unlink($file);
             if ($sucesso){
@@ -131,4 +132,17 @@ class HomeController extends Controller
             return view('home',compact('lista', 'erro','usuario'));
         }
     }
+
+    public function deleteusuario($id){
+        $user    = User::find($id)->delete();
+        $usuario = auth()->user();
+        $lista   = $this->lista(auth()->user()->id);
+        if ($user){
+           return view('home',compact('lista', 'sucesso','usuario'));
+        } else {
+            $erro = 'Problema na exclusão do usuário!';
+            return view('home',compact('lista', 'erro','usuario'));
+        }
+    }
+
 }

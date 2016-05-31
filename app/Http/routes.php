@@ -15,6 +15,7 @@ Route::auth();
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('/home', 'HomeController@index');
 	Route::get('/usuario/{id}', 'HomeController@usuario');
+	Route::get('/usuario/delete/{id}', 'HomeController@deleteusuario');
 	Route::post('/arquivo', 'HomeController@upload');
 	Route::get('/download/{id}/{arquivo}', 'HomeController@download');
 	Route::get('/delete/{id}/{arquivo}', 'HomeController@delete');

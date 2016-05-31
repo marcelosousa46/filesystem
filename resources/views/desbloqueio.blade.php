@@ -26,6 +26,7 @@
                                     <a href="{{'/desbloqueio/'.$lista[$i]->id}}" class="glyphicon glyphicon-ok"></a>
                                     <a href="{{'/bloqueio/'.$lista[$i]->id}}" class="glyphicon glyphicon-ban-circle" onclick="return confirm(\'Excluir arquivo?\')"></a>
                                     <a href="{{'/usuario/'.$lista[$i]->id}}" class="glyphicon glyphicon-download-alt"></a>
+                                    <a href="{{'/usuario/delete/'.$lista[$i]->id}}" class="glyphicon glyphicon-remove" onclick="return confirm(\'Excluir arquivo?\')"></a>
                                     @if ( $lista[$i]->status === 'L' )
                                         <i class="fa fa-circle text-success"></i>
                                     @else
