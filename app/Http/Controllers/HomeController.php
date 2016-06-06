@@ -23,7 +23,9 @@ class HomeController extends Controller
            while($arquivo = $diretorio -> read()){
                  if ($arquivo <> '.' AND $arquivo <> '..')
                  {   
-                     $lista[$i] = $arquivo;
+                     $lista[$i][0] = $arquivo;
+                     $lista[$i][1] = date("d/m/Y H:i:s", fileatime($pasta.'/'.$arquivo)) ;
+                     $lista[$i][2] = filesize($pasta.'/'.$arquivo) . ' bytes';
                      $i++;
                  }    
               }

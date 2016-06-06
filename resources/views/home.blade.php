@@ -16,15 +16,19 @@
                         @endif
                         <table class="table table-bordered">
                             <tr class="active">
-                                <th>Arquivos</th>
+                                <th>Nome</th>
+                                <th>Data de modifição</th>
+                                <th>Tamanho</th>
                                 <th>Ação</th>
                             </tr>
                             @for($i = 0; $i < count($lista); $i++)
                                <tr>
-                                <td>{{ $lista[$i] }}</td>
+                                <td>{{ $lista[$i][0] }}</td>
+                                <td>{{ $lista[$i][1] }}</td>
+                                <td>{{ $lista[$i][2] }}</td>
                                 <td>
-                                    <a href="{{'/download/'.$usuario->id.'/'.$lista[$i]}}" class="glyphicon glyphicon-download-alt"></a>
-                                    <a href="{{'/delete/'.$usuario->id.'/'.$lista[$i]}}" class="glyphicon glyphicon-remove" onclick="return confirm(\'Excluir arquivo?\')"></a>
+                                    <a href="{{'/download/'.$usuario->id.'/'.$lista[$i][0]}}" class="glyphicon glyphicon-download-alt"></a>
+                                    <a href="{{'/delete/'.$usuario->id.'/'.$lista[$i][0]}}" class="glyphicon glyphicon-remove" onclick="return confirm(\'Excluir arquivo?\')"></a>
                                 </td>
                                </tr>
                             @endfor
